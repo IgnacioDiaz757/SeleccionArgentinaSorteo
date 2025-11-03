@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="description" content="Participá por 2 pasajes para ver a la Selección Argentina. Revista Matices organiza el sorteo oficial.">
     <meta name="keywords" content="sorteo, selección argentina, mundial, pasajes, revista matices">
     <meta name="author" content="Revista Matices">
@@ -57,6 +57,8 @@
             --color-fondo: #f4f4f9;
             --color-texto: #333;
         }
+
+        html, body { -webkit-text-size-adjust: 100%; -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility; }
 
         body {
             font-family: 'Montserrat', sans-serif;
@@ -202,17 +204,7 @@
             pointer-events: none;
         }
 
-        .hero-content {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 16px;
-            color: #fff;
-            text-shadow: 0 2px 10px rgba(0,0,0,0.35);
-        }
+        .hero-content { display: none; }
 
         .hero-title {
             font-size: clamp(1.6rem, 3.5vw + 0.6rem, 2.6rem);
@@ -236,6 +228,20 @@
         .button.secondary {
             background: white;
             color: var(--color-principal);
+        }
+
+        /* Botonera debajo del hero */
+        .hero-cta-below {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin: 12px 0 8px 0;
+        }
+        .hero-cta-below .button { 
+            margin: 0;
+            font-size: 1rem;
+            padding: 12px 20px;
         }
 
         /* Contador de tiempo */
@@ -361,26 +367,118 @@
                 margin: 12px;
                 padding: 16px;
                 border-top-width: 8px;
+                padding-bottom: calc(16px + env(safe-area-inset-bottom));
+            }
+            .hero-image { height: 260px; }
+            header h1 {
+                font-size: 2rem !important;
+            }
+            header p {
+                font-size: 1.1rem !important;
+                margin-bottom: 8px;
+            }
+            .hero-title {
+                font-size: 1.8rem !important;
+                line-height: 1.25;
+                max-width: 95%;
+                padding: 0 8px;
+                font-weight: 800;
+                letter-spacing: 0.2px;
+            }
+            .hero-subtitle {
+                font-size: 1.1rem !important;
+                margin-bottom: 12px;
+                max-width: 95%;
+                padding: 0 8px;
+            }
+            .hero-cta-below { flex-direction: column; align-items: stretch; gap: 10px; margin-top: 10px; }
+            .hero-cta-below .button { 
+                width: 100%; 
+                margin: 0; 
+                font-size: 0.9rem !important;
+                padding: 10px 12px !important;
             }
             .cta-section {
                 padding: 16px 12px;
                 margin: 16px 0;
             }
+            .cta-section h2 {
+                font-size: 1.4rem !important;
+            }
             .cta-section ul {
                 margin: 10px 0;
             }
             .cta-section li {
-                font-size: 0.95rem;
+                font-size: 1.05rem !important;
             }
             .button {
                 width: 100%;
-                padding: 14px;
+                padding: 16px;
+                font-size: 1.15rem !important;
+            }
+            .countdown-section h3 {
+                font-size: 1.2rem !important;
+            }
+            .countdown-number {
+                font-size: 2.2rem !important;
+            }
+            .countdown-label {
+                font-size: 0.85rem !important;
             }
             .countdown-container {
                 gap: 8px;
             }
             .countdown-item {
                 padding: 12px 6px;
+            }
+            body {
+                font-size: 1.05rem;
+            }
+            h3 {
+                font-size: 1.15rem !important;
+            }
+            h4 {
+                font-size: 1.1rem !important;
+            }
+            p {
+                font-size: 1.05rem;
+            }
+        }
+
+        /* Tablets (600px–1023px) */
+        @media (min-width: 600px) and (max-width: 1023px) {
+            .container {
+                max-width: 760px;
+                padding: 24px;
+            }
+            header h1 {
+                font-size: 2.2rem;
+            }
+            header p {
+                font-size: 1.15rem;
+            }
+            .hero-image {
+                height: clamp(260px, 34vw, 420px);
+            }
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .button {
+                width: min(100%, 560px);
+                font-size: 1.2rem;
+                padding: 16px;
+            }
+            .cta-section h2 {
+                font-size: 1.6rem;
+            }
+            .cta-section ul {
+                grid-template-columns: 1fr 1fr;
+            }
+            .countdown-number {
+                font-size: 2.6rem;
             }
         }
 
@@ -420,7 +518,7 @@
     <div class="confetti-container" id="confettiContainer"></div>
     <main id="contenido" class="container" role="main">
         <header>
-            <h1>¡Pasaporte al Mundial! 🌍✈️</h1>
+            <h1>¡Ganate un viaje doble al Mundial! 🌍✈️</h1>
             <p><strong>Revista Matices</strong> te lleva a vos y un acompañante a vivir la pasión de la Albiceleste.</p>
         </header>
 
@@ -449,20 +547,14 @@
             </div>
         </section>
 
-        <div class="hero-image" role="img" aria-label="Imagen épica de la Selección Argentina">
-            <div class="hero-content">
-                <h2 class="hero-title"></h2>
-                <p class="hero-subtitle"></p>
-                <div class="hero-actions">
-                </div>
-            </div>
+        <div class="hero-image" role="img" aria-label="Imagen épica de la Selección Argentina"></div>
+        <div class="hero-cta-below">
+            <a href="https://www.instagram.com/revistamaticescba/" class="button" target="_blank" rel="noopener noreferrer" aria-label="Participar ahora en Instagram">Participar ahora</a>
+            <a href="./detalle.html" class="button secondary" rel="noopener" aria-label="Ver detalles del premio">Ver detalles</a>
         </div>
 
         <section class="cta-section">
             <h2>🏆 GANÁ UN VIAJE DOBLE AL MUNDIAL 🏆</h2>
-            <a href="detalle.html" class="button secondary" rel="noopener" aria-label="Ver detalle: Ganá un viaje doble al Mundial">
-                Ver detalle del premio
-            </a>
             <p>Demostrá tu pasión y participá para alentar a la Selección Argentina en el estadio.</p>
             
             <h3>Cómo Participar (Vía Instagram)</h3>
@@ -482,87 +574,13 @@
         <section aria-labelledby="detalles-clave">
             <h3 id="detalles-clave">Detalles Clave</h3>
             <!-- CONFIGURACIÓN: Reemplaza la URL de abajo con el link real de las bases y condiciones -->
-            <p>El premio incluye pasajes y alojamiento para 2 personas para presenciar un partido de la fase de grupos de Argentina. Consulta las bases y condiciones completas <a href="#bases" style="color: var(--color-principal); text-decoration: none; font-weight: bold;">aquí</a>.</p>
-        </section>
-
-        <section aria-labelledby="bases-condiciones" id="bases" style="text-align:left;margin-top:24px">
-            <h3 id="bases-condiciones">🏆 BASES Y CONDICIONES — SORTEO “VIAJE AL MUNDIAL 2026”</h3>
-
-            <h4>1. ORGANIZADOR</h4>
-            <p>El presente sorteo (en adelante, el “Sorteo”) es organizado por Matices Revista Digital, con domicilio en [Ciudad, Provincia, República Argentina] (en adelante, el “Organizador”).</p>
-
-            <h4>2. ACEPTACIÓN DE LAS BASES</h4>
-            <p>La participación en el Sorteo implica el conocimiento y la aceptación total y sin reservas de las presentes Bases y Condiciones, así como de toda modificación que el Organizador pudiera realizar conforme a la normativa vigente.</p>
-
-            <h4>3. VIGENCIA</h4>
-            <p>El Sorteo tendrá vigencia desde el [fecha de inicio] hasta el [fecha de finalización], ambas fechas inclusive. Fuera de dicho período no se admitirán participaciones.</p>
-
-            <h4>4. REQUISITOS PARA PARTICIPAR</h4>
-            <ul>
-                <li>Podrán participar todas las personas mayores de 18 años, con residencia permanente en la República Argentina, que completen correctamente el formulario oficial disponible en [URL del sitio web].</li>
-                <li>La participación es libre, gratuita y sin obligación de compra.</li>
-                <li>Cada persona podrá participar una sola vez. Participaciones duplicadas serán anuladas.</li>
-            </ul>
-
-            <h4>5. MECÁNICA DEL SORTEO</h4>
-            <p>Para participar, los interesados deberán completar todos los campos requeridos en el formulario del Sorteo, y aceptar expresamente las presentes Bases y Condiciones mediante el checkbox de conformidad. Al finalizar la etapa de inscripción, el Organizador realizará un sorteo aleatorio entre los participantes válidos utilizando un sistema automatizado y transparente.</p>
-
-            <h4>6. PREMIO</h4>
-            <p>El premio consiste en:</p>
-            <ul>
-                <li>Dos (2) viajes al Mundial 2026 (para el ganador y un acompañante), con pasajes aéreos ida y vuelta, alojamiento y entrada a un partido de fase de grupos, sujeto a disponibilidad y confirmación de agencias asociadas o auspiciantes.</li>
-            </ul>
-            <p>El premio no incluye:</p>
-            <ul>
-                <li>Trámites de pasaporte, visas, vacunas o seguros de viaje.</li>
-                <li>Comidas, traslados internos, impuestos, gastos personales o adicionales no especificados.</li>
-                <li>Gastos por pérdida de vuelos o reprogramaciones ajenas al Organizador.</li>
-            </ul>
-            <p>El premio no es transferible ni canjeable por dinero u otros bienes o servicios.</p>
-
-            <h4>7. SELECCIÓN Y PUBLICACIÓN DEL GANADOR</h4>
-            <p>El sorteo se realizará el día [fecha del sorteo], mediante un sistema aleatorio certificado o verificable. El ganador será notificado a través del correo electrónico y/o teléfono proporcionado en su inscripción, y publicado en las redes oficiales de Matices Revista Digital.</p>
-            <p>El ganador deberá responder la notificación en un plazo máximo de 5 (cinco) días hábiles desde su publicación. En caso de no hacerlo, perderá automáticamente el derecho al premio y se seleccionará un nuevo ganador.</p>
-
-            <h4>8. ENTREGA DEL PREMIO</h4>
-            <p>El ganador deberá acreditar su identidad mediante documento válido. El premio será entregado en persona o mediante acuerdo logístico entre las partes. En caso de que el viaje o el evento deportivo sean cancelados, modificados o reprogramados por causas ajenas al Organizador (tales como disposiciones gubernamentales, sanitarias, climáticas o de fuerza mayor), Matices no será responsable de dichos cambios ni estará obligado a compensar o reprogramar el premio.</p>
-
-            <h4>9. AUTORIZACIÓN DE USO DE IMAGEN Y NOMBRE</h4>
-            <p>El ganador autoriza expresamente a Matices Revista Digital a utilizar su nombre, apellido, imagen, voz y testimonio en cualquier medio de comunicación, red social o material promocional vinculado al Sorteo, sin derecho a compensación económica adicional.</p>
-
-            <h4>10. DATOS PERSONALES</h4>
-            <p>Los datos personales brindados por los participantes serán tratados conforme a lo dispuesto por la Ley N° 25.326 de Protección de Datos Personales. El titular de los datos podrá solicitar su acceso, rectificación o supresión dirigiéndose a [email de contacto de Matices]. El Organizador se compromete a no compartir ni comercializar los datos con terceros, salvo para fines estrictamente vinculados al Sorteo.</p>
-
-            <h4>11. EXCLUSIONES</h4>
-            <ul>
-                <li>Menores de edad.</li>
-                <li>Empleados del Organizador, colaboradores o agencias involucradas.</li>
-                <li>Personas que hayan brindado datos falsos o incompletos.</li>
-                <li>Participaciones automatizadas, fraudulentas o que incumplan las presentes Bases.</li>
-            </ul>
-
-            <h4>12. MODIFICACIONES Y CANCELACIÓN</h4>
-            <p>El Organizador se reserva el derecho de modificar, prorrogar, acortar, suspender o cancelar el Sorteo por causas justificadas o de fuerza mayor, comunicándolo por los medios oficiales. Dichas modificaciones no generarán derecho a reclamo ni compensación alguna por parte de los participantes.</p>
-
-            <h4>13. RESPONSABILIDAD</h4>
-            <ul>
-                <li>Fallas en los servicios de Internet, sistemas informáticos o plataformas de terceros.</li>
-                <li>Accidentes, pérdidas, robos, enfermedades, daños o perjuicios sufridos por el ganador o su acompañante durante el viaje o el evento.</li>
-                <li>Cambios, cancelaciones o reprogramaciones del Mundial 2026 por parte de la FIFA, aerolíneas, hoteles o proveedores asociados.</li>
-            </ul>
-            <p>El ganador asume total responsabilidad por los gastos, documentación, seguros y condiciones de viaje requeridas.</p>
-
-            <h4>14. JURISDICCIÓN Y LEY APLICABLE</h4>
-            <p>Cualquier controversia derivada del presente Sorteo será resuelta conforme a las leyes de la República Argentina, siendo competentes los tribunales ordinarios de la Ciudad de [Ciudad del domicilio del organizador], renunciando las partes a cualquier otro fuero o jurisdicción.</p>
-
-            <h4>15. DISPOSICIONES FINALES</h4>
-            <p>Estas Bases y Condiciones estarán disponibles en forma pública y gratuita en [URL del sitio web del sorteo] durante toda la vigencia del mismo. Toda situación no prevista en las presentes será resuelta por el Organizador conforme a derecho.</p>
+            <p>El premio incluye pasajes y alojamiento para 2 personas para presenciar un partido de la fase de grupos de Argentina. Consulta las bases y condiciones completas <a href="./bases.html" style="color: var(--color-principal); text-decoration: none; font-weight: bold;">aquí</a>.</p>
         </section>
 
         <footer>
-            <p>2025 Revista Matices. | Sorteo oficial.</p>
+            <p style="font-size: 1rem;">2025 Revista Matices. | Sorteo oficial.</p>
             <!-- CONFIGURACIÓN: Reemplaza "#" con el link real de las bases y condiciones -->
-            <p><a href="#bases" style="color: var(--color-principal); text-decoration: none;">Bases y condiciones</a> · <a href="mailto:contacto@revistamatices.com" style="color: var(--color-principal); text-decoration: none;">Contacto</a></p>
+            <p><a href="./bases.html" style="color: var(--color-principal); text-decoration: none; font-size: 1.1rem;">Bases y condiciones</a> · <a href="https://www.instagram.com/revistamaticescba/" target="_blank" rel="noopener noreferrer" style="color: var(--color-principal); text-decoration: none; font-size: 1.1rem;">Contacto</a></p>
         </footer>
     </main>
 
@@ -656,7 +674,8 @@
         function createConfetti() {
             const confettiContainer = document.getElementById('confettiContainer');
             const colors = ['#FFD700', '#73C2FB', '#FFFFFF', '#1C3B6E'];
-            const CONFETTI_COUNT = 48; // ajustar aquí la cantidad
+            const isSmallScreen = window.innerWidth <= 480;
+            const CONFETTI_COUNT = isSmallScreen ? 24 : 48; // menos confeti en móviles para mejor rendimiento
             const REFRESH_MS = 5000; // cada cuánto se renueva
 
             function spawnBatch() {

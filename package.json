@@ -1,0 +1,16 @@
+{
+  "name": "sorteo-seleccion-argentina",
+  "version": "1.0.0",
+  "description": "Landing estática para el sorteo de Revista Matices.",
+  "main": "index.js",
+  "scripts": {
+    "start": "live-server --port=5173 --open=Index.html",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  }
+}
